@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <div id="messages"></div>
+    
+    <script>
+        const status = document.getElementById('status');
+        const messages = document.getElementById('messages');
+        
+        console.log('🧪 Testing WebSocket connection...');
+        
+        const ws = new WebSocket('ws://localhost:8080/chat');
+        
+        ws.onopen = () => {
+            status.textContent = '✅ Connected!';
+            status.style.color = 'green';
+            console.log('✅ WebSocket connected successfully!');
+            
+            // Send a test message
+            ws.send(JSON.stringify({
+                type: 'user_message',
+                message: 'Hello, this is a test message',
+                timestamp: new Date().toISOString()
+            }));
+        };
+        
+        ws.onmessage = (event) => {
+            try {
+                const response = JSON.parse(event.data);
+                messages.innerHTML += '<div><strong>Bot:</strong> ' + response.message + '</div>';
+                console.log('📨 Received response:', response.message);
+            } catch (error) {
+                console.error('❌ Error parsing response:', error);
+            }
+        };
+        
+        ws.onerror = (error) => {
+            status.textContent = '❌ Connection Error';
+            status.style.color = 'red';
+            console.error('❌ WebSocket error:', error);
+        };
+        
+        ws.onclose = () => {
+            status.textContent = '🔌 Connection Closed';
+            status.style.color = 'orange';
+            console.log('🔌 WebSocket connection closed');
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "theme": {
+    "name": "Nirvaha Wellness",
+    "colors": {
+      "primary": {
+        "emerald": "#10b981",
+        "teal": "#14b8a6", 
+        "cyan": "#06b6d4"
+      },
+      "secondary": {
+        "purple": "#8b5cf6",
+        "pink": "#ec4899",
+        "blue": "#3b82f6"
+      },
+      "background": {
+        "gradient": "from-emerald-50 via-white to-teal-50",
+        "hero": "from-emerald-800 via-teal-800 to-cyan-800"
+      }
+    },
+    "typography": {
+      "headings": "font-bold",
+      "body": "text-gray-600",
+      "gradient": "bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent"
+    },
+    "spacing": {
+      "section": "py-20 px-4",
+      "container": "max-w-7xl mx-auto"
+    },
+    "effects": {
+      "shadows": "shadow-2xl hover:shadow-3xl",
+      "transitions": "transition-all duration-500",
+      "animations": "animate-pulse animate-bounce"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600 hover:from-emerald-500 hover:via-teal-600 hover:to-cyan-700 text-white",
+      "secondary": "bg-white text-gray-800 hover:bg-gray-100 border border-white/20"
+    },
+    "cards": {
+      "default": "bg-white rounded-2xl shadow-xl border border-gray-100",
+      "gradient": "bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200"
+    }
+  }
+}

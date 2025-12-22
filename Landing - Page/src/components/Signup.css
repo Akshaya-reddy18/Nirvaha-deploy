@@ -1,0 +1,16 @@
+.signup-container {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(to bottom right, rgb(15, 23, 42), rgb(17, 24, 39), rgb(30, 41, 59));
+    cursor: default;
+}
+
+.logo-container {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 50;
+}

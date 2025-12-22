@@ -1,0 +1,56 @@
+{
+  "components": [
+    {
+      "name": "CommunityHero",
+      "path": "src/components/CommunityHero.tsx",
+      "type": "hero",
+      "description": "Main hero section with meditation image and call-to-action buttons",
+      "props": {
+        "title": "AI-Powered Holistic Mental Wellness Platform",
+        "subtitle": "Transform your mental wellness with ancient spiritual wisdom and modern AI therapy",
+        "image": "/meditation.png"
+      }
+    },
+    {
+      "name": "NirvahaOTT",
+      "path": "src/components/NirvahaOTT.tsx",
+      "type": "content-library",
+      "description": "Wellness content library with mental wellness, personal wellness, and professional development content",
+      "features": ["video", "audio", "interactive", "ratings", "categories"]
+    },
+    {
+      "name": "MindTraining",
+      "path": "src/components/MindTraining.tsx",
+      "type": "training",
+      "description": "Sacred mind training section with mindfulness, breathwork, and meditation practices",
+      "features": ["tabs", "audio-player", "spiritual-elements"]
+    },
+    {
+      "name": "MindhouseLanding",
+      "path": "src/components/MindhouseLanding.tsx",
+      "type": "community",
+      "description": "Community section for safe sharing and support",
+      "features": ["community", "support", "whatsapp-integration"]
+    }
+  ],
+  "ui": [
+    {
+      "name": "Button",
+      "path": "src/components/ui/button.tsx",
+      "type": "button",
+      "variants": ["default", "destructive", "outline", "secondary", "ghost", "link"]
+    },
+    {
+      "name": "Card",
+      "path": "src/components/ui/card.tsx",
+      "type": "layout",
+      "variants": ["default", "outline"]
+    },
+    {
+      "name": "Badge",
+      "path": "src/components/ui/badge.tsx",
+      "type": "badge",
+      "variants": ["default", "secondary", "destructive", "outline"]
+    }
+  ]
+}
