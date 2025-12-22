@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* NIRVAHA SPIRITUAL DESIGN SYSTEM */
+
+:root {
+  /* Light Theme - Primary Colors */
+  --color-emerald-50: #f0fdf7;
+  --color-emerald-100: #dcfce8;
+  --color-emerald-200: #bbf7d1;
+  --color-emerald-300: #86efac;
+  --color-emerald-400: #4ade80;
+  --color-emerald-500: #22c55e;
+  --color-emerald-600: #16a34a;
+  --color-emerald-700: #15803d;
+  --color-emerald-800: #166534;
+  
+  /* Neon Lime Accents */
+  --color-lime-400: #a3e635;
+  --color-lime-500: #84cc16;
+  --color-lime-600: #65a30d;
+  
+  /* Teal Shades */
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+  
+  /* Spiritual Whites */
+  --color-spiritual-white: #fdfffe;
+  --color-spiritual-off-white: #f9fffe;
+  --color-spiritual-cream: #f5fcfa;
+  
+  /* Dark Spiritual Theme */
+  --color-spiritual-navy: #0a1f1c;
+  --color-spiritual-dark-teal: #0f2d2a;
+  --color-spiritual-dark-emerald: #134237;
+  
+  /* Glow Tokens */
+  --glow-emerald: 0 0 20px rgba(34, 197, 94, 0.3);
+  --glow-emerald-strong: 0 0 40px rgba(34, 197, 94, 0.5);
+  --glow-lime: 0 0 20px rgba(163, 230, 53, 0.4);
+  --glow-teal: 0 0 20px rgba(20, 184, 166, 0.3);
+  --glow-white: 0 0 30px rgba(255, 255, 255, 0.2);
+  
+  /* Sacred Depth Shadows */
+  --shadow-soft: 0 4px 24px rgba(34, 197, 94, 0.08);
+  --shadow-float: 0 12px 40px rgba(34, 197, 94, 0.12);
+  --shadow-divine: 0 20px 60px rgba(34, 197, 94, 0.18);
+  --shadow-3d: 0 30px 80px rgba(34, 197, 94, 0.25);
+  
+  /* Sacred Gradients */
+  --gradient-spiritual: linear-gradient(135deg, #22c55e 0%, #14b8a6 50%, #a3e635 100%);
+  --gradient-divine: linear-gradient(180deg, #f0fdf7 0%, #dcfce8 100%);
+  --gradient-aura: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+  --gradient-orb: radial-gradient(circle, #a3e635 0%, #22c55e 40%, #14b8a6 100%);
+  
+  /* Motion Easing */
+  --ease-spiritual: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-divine: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-calm: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Dark Theme */
+.dark-spiritual {
+  --bg-primary: var(--color-spiritual-navy);
+  --bg-secondary: var(--color-spiritual-dark-teal);
+  --bg-elevated: var(--color-spiritual-dark-emerald);
+  --text-primary: var(--color-emerald-50);
+  --text-secondary: var(--color-teal-200);
+}
+
+/* Typography System */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--color-spiritual-white);
+  color: var(--color-teal-900);
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h5 {
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+p {
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-teal-700);
+}
+
+/* Spiritual Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Sacred Geometry */
+.sacred-geometry {
+  position: absolute;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* Glow Effects */
+.glow-emerald {
+  box-shadow: var(--glow-emerald);
+}
+
+.glow-lime {
+  box-shadow: var(--glow-lime);
+}
+
+.glow-teal {
+  box-shadow: var(--glow-teal);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-emerald-50);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-emerald-400), var(--color-teal-400));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-emerald-500), var(--color-teal-500));
+}
+
+/* Selection */
+::selection {
+  background: var(--color-emerald-300);
+  color: var(--color-teal-900);
+}
+
+/* Glass Morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Spiritual Card */
+.spiritual-card {
+  background: var(--color-spiritual-white);
+  border-radius: 24px;
+  box-shadow: var(--shadow-float);
+  transition: all 0.4s var(--ease-spiritual);
+}
+
+.spiritual-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-divine);
+}
