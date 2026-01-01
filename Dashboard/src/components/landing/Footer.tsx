@@ -1,32 +1,14 @@
-import { Mail, Phone, Globe, Facebook, Twitter, Instagram, Linkedin, Lock } from 'lucide-react';
+import { Mail, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
-    // Create icon components to avoid TypeScript issues
-    const LockIcon = Lock as any;
-    const PhoneIcon = Phone as any;
     const MailIcon = Mail as any;
-    const GlobeIcon = Globe as any;
-    const footerSections = [
-        {
-            title: 'Company',
-            links: [
-                'About Us',
-                'Our Mission',
-                'Careers',
-                'Press Kit',
-                'Contact'
-            ]
-        },
-        {
-            title: 'Legal',
-            links: [
-                'Privacy Policy',
-                'Terms of Service',
-                // 'HIPAA Compliance',
-                'Cookie Policy',
-                'Accessibility'
-            ]
-        }
+    const InstagramIcon = Instagram as any;
+    const LinkedinIcon = Linkedin as any;
+
+    const socials = [
+        { icon: MailIcon, href: 'mailto:hello@projectverse.ai', aria: 'Email' },
+        { icon: InstagramIcon, href: 'https://www.instagram.com/_nirvaha_/?igsh=c3huaDF1bTl6Ymd6#', aria: 'Instagram', blank: true },
+        { icon: LinkedinIcon, href: 'https://www.linkedin.com/company/soulverse23/', aria: 'LinkedIn', blank: true }
     ];
 
     return (
@@ -39,14 +21,15 @@ const Footer = () => {
                     </div>
                     <div className="text-center text-sm text-[#4a4a4a] order-3 md:order-none">© 2024 Nirvaha Wellness LLP</div>
                     <div className="flex items-center gap-3">
-                        {[
-                            { icon: Facebook as any, href: '#' },
-                            { icon: Twitter as any, href: '#' },
-                            { icon: Instagram as any, href: '#' },
-                            { icon: Linkedin as any, href: '#' }
-                        ].map((social, i) => (
-                            <a key={i} href={social.href} className="w-9 h-9 rounded-xl bg-white/80 border border-yellow-200/60 flex items-center justify-center hover:shadow transition-all">
-                                <social.icon className="h-4 w-4" />
+                        {socials.map((s, i) => (
+                            <a
+                                key={i}
+                                href={s.href}
+                                aria-label={s.aria}
+                                className="w-9 h-9 rounded-xl bg-white/80 border border-yellow-200/60 flex items-center justify-center hover:shadow transition-all"
+                                {...(s.blank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                            >
+                                <s.icon className="h-4 w-4" />
                             </a>
                         ))}
                     </div>

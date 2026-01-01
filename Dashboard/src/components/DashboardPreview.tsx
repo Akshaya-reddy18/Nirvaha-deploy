@@ -1,7 +1,9 @@
 import { motion } from "motion/react";
 import { Activity, Calendar, TrendingUp, Award, Clock, Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function DashboardPreview() {
+  const navigate = useNavigate();
   return (
     <section className="relative py-24 px-6 overflow-hidden bg-gradient-to-br from-white via-teal-50/20 to-emerald-50/20">
       {/* Ambient Background */}
@@ -29,16 +31,6 @@ export function DashboardPreview() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-100/50 rounded-full border border-teal-300/30 mb-6"
-          >
-            <Activity className="w-4 h-4 text-teal-600" />
-            <span className="text-sm text-teal-700">Track Your Progress</span>
-          </motion.div>
-
           <h2 className="text-emerald-800 mb-4">Your Wellness Dashboard</h2>
           <p className="max-w-2xl mx-auto text-lg text-teal-700">
             Visualize your spiritual journey with beautiful analytics, personalized insights, 

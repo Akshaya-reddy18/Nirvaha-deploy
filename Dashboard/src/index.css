@@ -1,5 +1,4 @@
-@import 'aos/dist/aos.css';
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -391,6 +390,73 @@
     transform: translateY(0);
   }
 
+  /* Unified Landing Page Heading Styles */
+  .heading-primary {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-bold;
+    @apply leading-tight tracking-tight;
+    font-family: 'Cinzel', 'Georgia', serif;
+    background: linear-gradient(135deg, #115e59 0%, #0f766e 25%, #0e7490 50%, #0c4a6e 75%, #075985 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: fadeInUp 0.8s ease-out, shimmer 3s linear infinite;
+  }
+
+  .heading-secondary {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-semibold;
+    @apply leading-tight tracking-tight;
+    font-family: 'Cinzel', 'Georgia', serif;
+    background: linear-gradient(135deg, #134e4a 0%, #0f766e 30%, #0e7490 60%, #0c4a6e 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: fadeInUp 0.8s ease-out 0.1s both, shimmer 3s linear infinite;
+  }
+
+  .heading-tertiary {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-semibold;
+    @apply leading-tight tracking-tight;
+    font-family: 'Cinzel', 'Georgia', serif;
+    background: linear-gradient(135deg, #115e59 0%, #0f766e 40%, #0e7490 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: fadeInUp 0.8s ease-out 0.2s both, shimmer 3s linear infinite;
+  }
+
+  .subheading {
+    @apply text-lg sm:text-xl lg:text-2xl;
+    @apply leading-relaxed;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #0c4a6e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  /* Darker variant for headings - matches secondary structure but darker */
+  .heading-dark {
+    background: linear-gradient(135deg, #0a3838 0%, #0a5454 30%, #0a6b7a 60%, #083a5c 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+  }
+
   /* Glass morphism effect */
   .glass {
     background: rgba(255, 255, 255, 0.25);
@@ -458,8 +524,8 @@
   }
 
   .btn-quantum {
-    @apply bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900;
-    @apply hover:from-slate-800 hover:via-emerald-800 hover:to-teal-800;
+    @apply bg-gradient-to-br from-white via-emerald-100 to-teal-200;
+    @apply hover:from-emerald-50 hover:via-teal-100 hover:to-emerald-200;
     @apply text-white font-semibold px-8 py-4 rounded-3xl;
     @apply transition-all duration-500 transform hover:scale-105;
     @apply shadow-2xl hover:shadow-emerald-500/20;
@@ -529,7 +595,7 @@
   }
 
   .glass-quantum {
-    @apply bg-gradient-to-br from-slate-900/20 via-emerald-900/20 to-teal-900/20;
+    @apply bg-gradient-to-br from-emerald-100/30 via-teal-100/30 to-emerald-200/30;
     @apply backdrop-blur-2xl border border-emerald-400/30;
     @apply rounded-3xl shadow-2xl;
     @apply transition-all duration-500;
@@ -662,13 +728,14 @@
   /* Spiritual continuous page background */
   .spiritual-page-bg {
     background: linear-gradient(180deg,
-        #071816 0%,
-        #0b2622 18%,
-        #123f38 35%,
-        #2f7f73 55%,
-        #8fdcd0 75%,
-        #dffaf6 90%,
-        #ffffff 100%);
+        #0d4038 0%,
+        #115c4f 15%,
+        #1a6e5e 30%,
+        #2e7f74 45%,
+        #4fa89d 60%,
+        #6dc5b8 75%,
+        #8dd9ce 90%,
+        #a9e7da 100%);
   }
 
   /* Hero blend into content */
@@ -718,15 +785,17 @@
   /* Floating sacred symbols for GoldenShowcase (scoped) */
   .golden-symbol {
     position: absolute;
-    color: rgba(16, 185, 129, 0.18);
-    /* soft teal */
-    mix-blend-mode: soft-light;
+    z-index: 0;
+    color: rgba(218, 165, 32, 1);
+    mix-blend-mode: lighten;
     pointer-events: none;
-    opacity: 0.14;
+    opacity: 1;
     font-size: clamp(2.75rem, 4.5vw, 4.5rem);
     animation: goldenFloat 28s ease-in-out infinite;
     will-change: transform, opacity;
     user-select: none;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.75);
+    filter: drop-shadow(0 0 40px rgba(218, 165, 32, 0.8));
   }
 
   .golden-symbol-om-1 {
@@ -734,6 +803,9 @@
     left: 8%;
     font-size: clamp(3rem, 5vw, 5rem);
     animation-delay: -6s;
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
   }
 
   .golden-symbol-om-2 {
@@ -741,14 +813,18 @@
     left: 72%;
     font-size: clamp(2.5rem, 4.25vw, 4.5rem);
     animation-delay: -12s;
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
   }
 
   .golden-symbol-swastik-1 {
     top: 25%;
     right: 6%;
     font-size: clamp(2.5rem, 4.5vw, 4.75rem);
-    color: rgba(234, 179, 8, 0.18);
-    /* muted gold */
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
     animation-delay: -18s;
   }
 
@@ -756,8 +832,55 @@
     bottom: 8%;
     left: 18%;
     font-size: clamp(2.25rem, 4vw, 4.25rem);
-    color: rgba(250, 204, 21, 0.16);
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
     animation-delay: -22s;
+  }
+
+  /* Additional symbols for fuller background coverage */
+  .golden-symbol-om-3 {
+    top: 35%;
+    right: 10%;
+    font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
+    animation: goldenFloat 32s ease-in-out infinite;
+    animation-delay: -10s;
+  }
+
+  .golden-symbol-om-4 {
+    bottom: 20%;
+    right: 12%;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
+    animation: goldenFloat 35s ease-in-out infinite;
+    animation-delay: -16s;
+  }
+
+  .golden-symbol-swastik-3 {
+    top: 45%;
+    left: 5%;
+    font-size: clamp(2.4rem, 4.2vw, 4.6rem);
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
+    animation: goldenFloat 30s ease-in-out infinite;
+    animation-delay: -12s;
+  }
+
+  .golden-symbol-swastik-4 {
+    top: 70%;
+    right: 25%;
+    font-size: clamp(2.6rem, 4.3vw, 4.7rem);
+    color: rgba(218, 165, 32, 1);
+    opacity: 1;
+    text-shadow: 0 0 60px rgba(218, 165, 32, 0.85), 0 0 120px rgba(184, 134, 11, 0.7);
+    animation: goldenFloat 33s ease-in-out infinite;
+    animation-delay: -20s;
   }
 
   @keyframes goldenFloat {
@@ -765,12 +888,12 @@
     0%,
     100% {
       transform: translateY(0) rotate(0deg);
-      opacity: 0.05;
+      opacity: 0.9;
     }
 
     20% {
       transform: translateY(-10px) translateX(6px) rotate(3deg);
-      opacity: 0.14;
+      opacity: 0.95;
     }
 
     50% {
@@ -1149,9 +1272,11 @@
   .sacred-symbol {
     position: absolute;
     font-size: 120px;
-    color: rgba(120, 210, 200, 0.12);
-    mix-blend-mode: soft-light;
+    color: rgba(218, 165, 32, 0.65);
+    mix-blend-mode: multiply;
     animation: floatSlow 26s linear infinite;
+    text-shadow: 0 0 40px rgba(218, 165, 32, 0.6), 0 0 80px rgba(184, 134, 11, 0.4);
+    filter: drop-shadow(0 0 20px rgba(218, 165, 32, 0.5));
   }
 
   .om {

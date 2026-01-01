@@ -113,7 +113,7 @@ export function LoginPage({ onNavigate }: { onNavigate: (page: string) => void }
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <span className="text-white text-4xl">ॐ</span>
+                <Sparkles className="w-8 h-8 text-white" />
               </motion.div>
 
               <h1 className="text-emerald-800 mb-4">
@@ -200,7 +200,7 @@ export function LoginPage({ onNavigate }: { onNavigate: (page: string) => void }
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <span className="text-white text-3xl">ॐ</span>
+                <Sparkles className="w-7 h-7 text-white" />
               </motion.div>
               <h2 className="text-center text-emerald-800 mb-2">NIRVAHA</h2>
               <p className="text-center text-teal-600">Harmony of Mind</p>

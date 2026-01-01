@@ -13,6 +13,7 @@ export function MeditationPage() {
       duration: "15-30 minutes",
       color: "from-purple-400 to-indigo-500",
       icon: Crown,
+      image: "/Mudras/GM.jpeg",
     },
     {
       name: "Prana Mudra",
@@ -24,6 +25,7 @@ export function MeditationPage() {
       duration: "10-20 minutes",
       color: "from-red-400 to-orange-500",
       icon: Flame,
+      image: "/Mudras/PM.jpeg",
     },
     {
       name: "Vayu Mudra",
@@ -35,6 +37,7 @@ export function MeditationPage() {
       duration: "15-45 minutes",
       color: "from-cyan-400 to-blue-500",
       icon: Wind,
+      image: "/Mudras/AM.jpeg",
     },
     {
       name: "Varuna Mudra",
@@ -46,6 +49,7 @@ export function MeditationPage() {
       duration: "15-30 minutes",
       color: "from-blue-400 to-teal-500",
       icon: Droplet,
+      image: "/Mudras/VM.jpeg",
     },
   ];
 
@@ -107,7 +111,7 @@ export function MeditationPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/30 pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Page Header */}
         <motion.div
@@ -116,17 +120,8 @@ export function MeditationPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100/50 rounded-full border border-emerald-300/30 mb-6"
-          >
-            <Hand className="w-4 h-4 text-emerald-600" />
-            <span className="text-sm text-emerald-700">Sacred Practice</span>
-          </motion.div>
-
-          <h1 className="text-emerald-800 mb-4">Meditation & Mudras</h1>
-          <p className="max-w-3xl mx-auto text-lg text-teal-700">
+          <h1 className="text-white text-6xl md:text-7xl font-extrabold mb-6">Meditation & Mudras</h1>
+          <p className="max-w-3xl mx-auto text-lg text-white">
             Discover the ancient art of mudras and guided meditation practices 
             to channel energy, balance your chakras, and deepen your spiritual journey.
           </p>
@@ -138,9 +133,9 @@ export function MeditationPage() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-teal-800 mb-8"
+            className="text-white mb-8"
           >
-            Sacred Mudras
+            
           </motion.h2>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -164,9 +159,13 @@ export function MeditationPage() {
                   {/* Icon */}
                   <motion.div
                     whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                    className={`w-20 h-20 mb-6 rounded-3xl bg-gradient-to-br ${mudra.color} flex items-center justify-center shadow-lg`}
+                    className="w-20 h-20 mb-6 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden"
                   >
-                    <mudra.icon className="w-10 h-10 text-white" />
+                    <img 
+                      src={mudra.image} 
+                      alt={mudra.name}
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
 
                   {/* Title */}
@@ -233,7 +232,7 @@ export function MeditationPage() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-teal-800 mb-8"
+            className="text-white text-4xl md:text-5xl font-extrabold mb-10"
           >
             Guided Meditation Sessions
           </motion.h2>

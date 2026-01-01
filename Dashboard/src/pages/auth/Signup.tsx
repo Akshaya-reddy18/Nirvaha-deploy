@@ -1,5 +1,5 @@
 // Signup.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { User, Mail, Lock, Eye, EyeOff, Sparkles } from "lucide-react";
@@ -13,6 +13,8 @@ interface SignupData {
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
+  const heroImages = ["/foun/fo1.jpg", "/foun/fo2.jpg", "/foun/fo3.jpg"];
+  const [heroIndex, setHeroIndex] = useState(0);
   const [formData, setFormData] = useState<SignupData>({
     name: "",
     email: "",
@@ -23,6 +25,13 @@ const Signup: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<SignupData>>({});
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 2000);
+    return () => clearInterval(id);
+  }, []);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<SignupData> = {};
@@ -125,39 +134,31 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative flex overflow-hidden bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800" style={{ cursor: 'default' }}>
-
-      {/* Left Half - Video */}
-      <motion.div
-        className="hidden md:flex md:w-1/2 relative overflow-hidden"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <video
-          src="/signup video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
+    <div className="min-h-screen relative flex overflow-x-hidden bg-gradient-to-br from-white via-emerald-100 to-teal-200">
+      
+      {/* Left Section - Image Carousel (50% width on desktop, hidden on mobile/tablet) */}
+      <div className="hidden lg:flex lg:w-[50%] relative overflow-hidden h-screen bg-black">
+        <motion.img
+          key={heroImages[heroIndex]}
+          src={heroImages[heroIndex]}
+          alt="Signup showcase"
           className="w-full h-full object-cover"
-          onError={(e) => {
-            // Fallback if video path has issues
-            const target = e.target as HTMLVideoElement;
-            target.style.display = 'none';
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         />
-      </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+      </div>
 
-      {/* Right Half - Signup Form */}
+      {/* Right Section - Signup Form (65% width on desktop, 100% on mobile/tablet) */}
       <motion.div
-        className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12 relative z-10 bg-gradient-to-br from-slate-800/90 via-gray-800/90 to-slate-900/90 backdrop-blur-sm"
+        className="w-full lg:w-[65%] flex items-center justify-center p-6 md:p-12 relative z-10 bg-gradient-to-br from-white/90 via-emerald-50/90 to-teal-50/90 backdrop-blur-sm"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <motion.div
-          className="w-full max-w-md"
+          className="w-full max-w-2xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -171,7 +172,6 @@ const Signup: React.FC = () => {
               Sign up to begin your spiritual wellness journey
             </p>
           </motion.div>
-
           {/* Signup Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Field */}
@@ -187,11 +187,11 @@ const Signup: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your full name"
-                  className={`w-full pl-12 pr-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 ${
+                  className={`w-full pl-12 pr-4 py-3 rounded-lg border border-emerald-300/80 bg-white text-black placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:ring-2 ${
                     errors.name
                       ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                      : "border-white/20 focus:border-emerald-400 focus:ring-emerald-400/20"
-                  } bg-white/5 text-white placeholder:text-white/40`}
+                      : "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500/20"
+                  }`}
                   required
                 />
               </div>
@@ -213,11 +213,11 @@ const Signup: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email"
-                  className={`w-full pl-12 pr-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 ${
+                  className={`w-full pl-12 pr-4 py-3 rounded-lg border border-emerald-300/80 bg-white text-black placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:ring-2 ${
                     errors.email
                       ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                      : "border-white/20 focus:border-emerald-400 focus:ring-emerald-400/20"
-                  } bg-white/5 text-white placeholder:text-white/40`}
+                      : "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500/20"
+                  }`}
                   required
                 />
               </div>
@@ -239,11 +239,11 @@ const Signup: React.FC = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Enter your password"
-                  className={`w-full pl-12 pr-12 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 ${
+                  className={`w-full pl-12 pr-12 py-3 rounded-lg border border-emerald-300/80 bg-white text-black placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:ring-2 ${
                     errors.password
                       ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                      : "border-white/20 focus:border-emerald-400 focus:ring-emerald-400/20"
-                  } bg-white/5 text-white placeholder:text-white/40`}
+                      : "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500/20"
+                  }`}
                   required
                 />
                 <button
@@ -276,11 +276,11 @@ const Signup: React.FC = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Confirm your password"
-                  className={`w-full pl-12 pr-12 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 ${
+                  className={`w-full pl-12 pr-12 py-3 rounded-lg border border-emerald-300/80 bg-white text-black placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:ring-2 ${
                     errors.confirmPassword
                       ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                      : "border-white/20 focus:border-emerald-400 focus:ring-emerald-400/20"
-                  } bg-white/5 text-white placeholder:text-white/40`}
+                      : "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500/20"
+                  }`}
                   required
                 />
                 <button

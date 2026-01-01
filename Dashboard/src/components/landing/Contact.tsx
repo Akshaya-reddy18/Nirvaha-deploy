@@ -85,7 +85,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="relative bg-gradient-to-br from-white to-gray-50 py-20 px-4 overflow-hidden">
+    <div className="relative bg-gradient-to-br from-white to-emerald-50 py-20 px-4 overflow-hidden">
       {/* Subtle pattern overlay */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -104,7 +104,7 @@ const Contact = () => {
             className="lg:col-span-5 order-2 lg:order-1"
           >
             <div className="mb-6">
-              <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">Let's Build the Future Together</h1>
+              <h1 className="text-4xl lg:text-5xl font-extrabold text-teal-800 leading-tight">Let's Build the Future Together</h1>
               <p className="mt-3 text-gray-600">Ready to transform your business with AI-powered automation? Get in touch with our team and discover how we can accelerate your innovation.</p>
             </div>
 
@@ -116,7 +116,7 @@ const Contact = () => {
               className="space-y-6"
             >
               <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h3>
+                <h3 className="text-xl font-semibold text-teal-800 mb-4">Contact Information</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4 text-gray-700">
                     <div className="bg-green-100 p-2 rounded-xl">
@@ -133,8 +133,8 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-sm">
-                <h4 className="text-lg font-medium text-gray-900 mb-3">Office Hours</h4>
+              <div className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-6 shadow-sm">
+                <h4 className="text-lg font-medium text-teal-800 mb-3">Office Hours</h4>
                 <div className="space-y-2 text-gray-600">
                   <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
                   <p>Saturday: 10:00 AM - 4:00 PM</p>
@@ -169,7 +169,7 @@ const Contact = () => {
                       >
                         <CheckCircle className="w-8 h-8 text-green-600" />
                       </motion.div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
+                      <h3 className="text-xl font-semibold text-emerald-700 mb-2">Message Sent!</h3>
                       <p className="text-gray-600">We'll get back to you as soon as possible.</p>
                     </div>
                   </motion.div>

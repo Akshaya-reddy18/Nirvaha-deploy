@@ -20,11 +20,21 @@ import {
   Mail,
   ExternalLink,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function CompanionPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [selectedCompanion, setSelectedCompanion] = useState<any>(null);
+  const [likedIds, setLikedIds] = useState<string[]>([]);
+  const [filter, setFilter] = useState<"all" | "liked">("all");
+  const [booking, setBooking] = useState<{
+    open: boolean;
+    companion: any | null;
+    type: "chat" | "video" | null;
+    platform: string;
+    date: string;
+    time: string;
+  }>({ open: false, companion: null, type: null, platform: "", date: "", time: "" });
 
   const companions = [
     {
@@ -150,8 +160,62 @@ export function CompanionPage() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  // Load/save liked companions
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("nirvaha_liked_companions");
+      if (raw) setLikedIds(JSON.parse(raw));
+    } catch {}
+  }, []);
+
+  const saveLiked = (next: string[]) => {
+    setLikedIds(next);
+    try {
+      localStorage.setItem("nirvaha_liked_companions", JSON.stringify(next));
+    } catch {}
+  };
+
+  const toggleLike = (id: string) => {
+    const next = likedIds.includes(id)
+      ? likedIds.filter((x) => x !== id)
+      : [id, ...likedIds];
+    saveLiked(next);
+  };
+
+  const filteredCompanions = useMemo(
+    () => (filter === "liked" ? companions.filter((c) => likedIds.includes(c.id)) : companions),
+    [filter, companions, likedIds]
+  );
+
+  // Booking helpers
+  const openBooking = (companion: any, type: "chat" | "video") => {
+    setBooking({ open: true, companion, type, platform: "", date: "", time: "" });
+  };
+
+  const submitBooking = () => {
+    if (!booking.open || !booking.companion || !booking.type || !booking.platform || !booking.date || !booking.time) return;
+    const record = {
+      id: crypto.randomUUID?.() || `${Date.now()}`,
+      companionId: booking.companion.id,
+      companionName: booking.companion.name,
+      type: booking.type,
+      platform: booking.platform,
+      date: booking.date,
+      time: booking.time,
+      createdAt: Date.now(),
+    };
+    try {
+      const raw = localStorage.getItem("nirvaha_bookings");
+      const arr = raw ? JSON.parse(raw) : [];
+      arr.unshift(record);
+      localStorage.setItem("nirvaha_bookings", JSON.stringify(arr));
+    } catch {}
+    setBooking({ open: false, companion: null, type: null, platform: "", date: "", time: "" });
+    alert("Booking requested successfully. You'll receive details soon.");
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-emerald-50/20 to-teal-50/20 pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Page Header */}
         <motion.div
@@ -160,21 +224,10 @@ export function CompanionPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-lime-100/50 rounded-full border border-lime-300/30 mb-6"
-          >
-            <Sparkles className="w-4 h-4 text-lime-600" />
-            <span className="text-sm text-lime-700">
-              Connect with Spiritual Companions
-            </span>
-          </motion.div>
-
-          <h1 className="text-emerald-800 mb-4">
+          <h1 className="text-white text-6xl md:text-7xl font-extrabold mb-6">
             Find Your Perfect Spiritual Guide
           </h1>
-          <p className="max-w-3xl mx-auto text-lg text-teal-700 mb-8">
+          <p className="max-w-3xl mx-auto text-lg text-white mb-8">
             Book 1-on-1 sessions with experienced spiritual teachers, meditation
             guides, and wellness coaches. Pay per hour or per call.
           </p>
@@ -217,9 +270,20 @@ export function CompanionPage() {
           ))}
         </motion.div>
 
+        {/* Filter Tabs */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="inline-flex p-1 bg-white/70 backdrop-blur-xl rounded-2xl border border-emerald-200/40 shadow-sm">
+            <button onClick={() => setFilter("all")} className={`px-4 py-2 rounded-xl text-sm ${filter === 'all' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow' : 'text-teal-700'}`}>All</button>
+            <button onClick={() => setFilter("liked")} className={`px-4 py-2 rounded-xl text-sm ${filter === 'liked' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow' : 'text-teal-700'}`}>Liked</button>
+          </div>
+          {filter === 'liked' && (
+            <p className="text-sm text-teal-600">{filteredCompanions.length} liked</p>
+          )}
+        </div>
+
         {/* Companions Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {companions.map((companion, i) => (
+          {filteredCompanions.map((companion, i) => (
             <motion.div
               key={companion.id}
               initial={{ opacity: 0, y: 30 }}
@@ -357,9 +421,11 @@ export function CompanionPage() {
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="w-12 h-12 bg-white border-2 border-emerald-200 rounded-2xl flex items-center justify-center hover:bg-emerald-50 transition-colors"
+                      onClick={() => toggleLike(companion.id)}
+                      aria-pressed={likedIds.includes(companion.id)}
+                      className={`w-12 h-12 bg-white border-2 rounded-2xl flex items-center justify-center transition-colors ${likedIds.includes(companion.id) ? 'border-rose-200 bg-rose-50' : 'border-emerald-200 hover:bg-emerald-50'}`}
                     >
-                      <Heart className="w-5 h-5 text-rose-500" />
+                      <Heart className={`w-5 h-5 ${likedIds.includes(companion.id) ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}`} />
                     </motion.button>
                   </div>
 
@@ -529,9 +595,10 @@ export function CompanionPage() {
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
+                          onClick={() => openBooking(selectedCompanion, 'chat')}
                           className={`w-full py-3 bg-gradient-to-r ${selectedCompanion.color} text-white rounded-xl`}
                         >
-                          Book Hourly Session
+                          Book Chat Session
                         </motion.button>
                       </div>
 
@@ -550,9 +617,10 @@ export function CompanionPage() {
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
+                          onClick={() => openBooking(selectedCompanion, 'video')}
                           className={`w-full py-3 bg-gradient-to-r ${selectedCompanion.color} text-white rounded-xl`}
                         >
-                          Book Single Call
+                          Book Video Call
                         </motion.button>
                       </div>
                     </div>
@@ -577,6 +645,90 @@ export function CompanionPage() {
                     )}
                   </motion.button>
                 </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Booking Modal */}
+        {booking.open && booking.companion && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setBooking({ open: false, companion: null, type: null, platform: "", date: "", time: "" })}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-[32px] max-w-lg w-full shadow-2xl p-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <img src={booking.companion.avatar} alt={booking.companion.name} className="w-12 h-12 rounded-xl object-cover" />
+                <div>
+                  <h4 className="text-teal-800">Book {booking.companion.name}</h4>
+                  <p className="text-sm text-teal-600">{booking.type === 'chat' ? 'Chat Session' : 'Video Call'}</p>
+                </div>
+              </div>
+
+              {/* Platform selection */}
+              <div className="mb-4">
+                <p className="text-sm text-teal-700 mb-2">Choose Platform</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {(booking.type === 'chat'
+                    ? ['In-App Chat', 'WhatsApp', 'Telegram', 'Signal']
+                    : ['Google Meet', 'Zoom', 'Microsoft Teams'])
+                    .map((p) => (
+                      <button
+                        key={p}
+                        onClick={() => setBooking({ ...booking, platform: p })}
+                        className={`px-3 py-2 rounded-xl border text-sm ${booking.platform === p ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-transparent' : 'bg-white border-emerald-200 text-teal-800 hover:bg-emerald-50'}`}
+                      >
+                        {p}
+                      </button>
+                    ))}
+                </div>
+              </div>
+
+              {/* Date & Time */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                  <p className="text-sm text-teal-700 mb-1">Date</p>
+                  <input
+                    type="date"
+                    value={booking.date}
+                    onChange={(e) => setBooking({ ...booking, date: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-emerald-200 text-teal-800 bg-white"
+                  />
+                </div>
+                <div>
+                  <p className="text-sm text-teal-700 mb-1">Time</p>
+                  <input
+                    type="time"
+                    value={booking.time}
+                    onChange={(e) => setBooking({ ...booking, time: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-emerald-200 text-teal-800 bg-white"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setBooking({ open: false, companion: null, type: null, platform: '', date: '', time: '' })}
+                  className="flex-1 px-4 py-3 rounded-xl border border-emerald-200 text-teal-800 hover:bg-emerald-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={submitBooking}
+                  disabled={!booking.platform || !booking.date || !booking.time}
+                  className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Book Now
+                </button>
               </div>
             </motion.div>
           </motion.div>

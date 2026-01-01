@@ -64,7 +64,7 @@ export function SoundHealingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-emerald-900 to-teal-800 text-white pt-24 pb-32">
+    <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Page Header */}
         <motion.div
@@ -73,17 +73,8 @@ export function SoundHealingPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-6"
-          >
-            <Volume2 className="w-4 h-4 text-lime-300" />
-            <span className="text-sm text-emerald-100">Vibrational Healing</span>
-          </motion.div>
-
-          <h1 className="text-white mb-4">Sound Healing Library</h1>
-          <p className="max-w-3xl mx-auto text-lg text-emerald-100">
+          <h1 className="text-white text-6xl md:text-7xl font-extrabold mb-6">Sound Healing Library</h1>
+          <p className="max-w-3xl mx-auto text-lg text-white/90">
             Immerse yourself in therapeutic frequencies and healing vibrations. 
             Each sound is carefully crafted to restore harmony and promote deep healing.
           </p>
@@ -96,7 +87,7 @@ export function SoundHealingPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-16"
         >
-          <div className="relative bg-white/10 backdrop-blur-2xl rounded-[48px] p-12 border border-white/20 overflow-hidden shadow-2xl">
+          <div className="relative bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-2xl rounded-[48px] p-12 border border-white/30 overflow-hidden shadow-2xl">
             {/* Background Waveform */}
             <div className="absolute inset-0 flex items-center justify-center gap-1 px-12 opacity-20">
               {Array.from({ length: 80 }).map((_, i) => {
@@ -255,7 +246,7 @@ export function SoundHealingPage() {
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="text-white mb-8"
+          className="text-white text-4xl md:text-5xl font-extrabold mb-10"
         >
           Full Library
         </motion.h3>
@@ -274,40 +265,40 @@ export function SoundHealingPage() {
             >
               {/* Glow */}
               <motion.div
-                className={`absolute inset-0 bg-gradient-to-br ${track.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity`}
+                className={`absolute inset-0 rounded-3xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity bg-white/10`}
               />
 
               {/* Card */}
-              <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20 hover:border-white/40 transition-all">
+                <div className="relative bg-white rounded-3xl p-6 border-2 border-gray-200 hover:border-emerald-500 transition-all shadow-2xl">
                 <div className="flex items-start gap-4 mb-4">
                   <motion.div
                     whileHover={{ rotate: 15 }}
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${track.color} flex items-center justify-center flex-shrink-0 shadow-lg`}
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-lg"
                   >
                     <Volume2 className="w-8 h-8 text-white" />
                   </motion.div>
 
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-white truncate mb-1">{track.title}</h4>
-                    <p className="text-sm text-emerald-200 truncate">{track.artist}</p>
+                    <h4 className="text-gray-900 font-bold truncate mb-1">{track.title}</h4>
+                    <p className="text-sm text-gray-700 truncate font-semibold">{track.artist}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs px-3 py-1 bg-white/10 rounded-full">{track.category}</span>
-                  <span className="text-xs text-lime-300">{track.frequency}</span>
+                  <span className="text-xs px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full font-semibold">{track.category}</span>
+                  <span className="text-xs text-emerald-600 font-bold">{track.frequency}</span>
                 </div>
 
-                <p className="text-sm text-emerald-200 mb-4 line-clamp-2">{track.description}</p>
+                <p className="text-sm text-gray-700 mb-4 line-clamp-2 font-medium">{track.description}</p>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-emerald-200">{track.duration}</span>
+                  <span className="text-sm text-gray-700 font-semibold">{track.duration}</span>
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all"
+                    className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 flex items-center justify-center transition-all shadow-lg"
                   >
-                    <Play className="w-4 h-4 ml-0.5" />
+                    <Play className="w-4 h-4 ml-0.5 text-white" />
                   </motion.button>
                 </div>
               </div>

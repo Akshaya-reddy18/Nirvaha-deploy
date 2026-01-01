@@ -1,8 +1,15 @@
 import { motion } from "motion/react";
-import { Heart, MessageCircle, Share2, MoreHorizontal, Star, Award, Users, TrendingUp } from "lucide-react";
+import { Heart, MessageCircle, Share2, MoreHorizontal, Star, Award, Users, TrendingUp, X, Send } from "lucide-react";
+import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
 export function CommunityPage() {
-  const posts = [
+  const { user } = useAuth();
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState<any>(null);
+  const [postContent, setPostContent] = useState("");
+  const [posts, setPosts] = useState([
     {
       author: "Sarah Mitchell",
       role: "Meditation Guide",
@@ -43,7 +50,30 @@ export function CommunityPage() {
       comments: 41,
       type: "wisdom",
     },
-  ];
+  ]);
+
+  const handleCreatePost = () => {
+    if (postContent.trim()) {
+      const newPost = {
+        author: user?.name || "You",
+        role: user?.role || "Wellness Seeker",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
+        time: "just now",
+        content: postContent,
+        likes: 0,
+        comments: 0,
+        type: "user",
+      };
+      setPosts([newPost, ...posts]);
+      setPostContent("");
+      setShowPostModal(false);
+    }
+  };
+
+  const handleProfileClick = (post: any) => {
+    setSelectedProfile(post);
+    setShowProfileModal(true);
+  };
 
   const topMentors = [
     {
@@ -70,7 +100,7 @@ export function CommunityPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/30 pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Page Header */}
         <motion.div
@@ -79,17 +109,7 @@ export function CommunityPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100/50 rounded-full border border-emerald-300/30 mb-6"
-          >
-            <Users className="w-4 h-4 text-emerald-600" />
-            <span className="text-sm text-emerald-700">50K+ Active Members</span>
-          </motion.div>
-
-          <h1 className="text-emerald-800 mb-4">Community Feed</h1>
-          <p className="max-w-2xl mx-auto text-lg text-teal-700">
+          <p className="max-w-2xl mx-auto text-4xl md:text-5xl font-bold text-white">
             Connect, share, and grow together on your spiritual journey
           </p>
         </motion.div>
@@ -97,6 +117,28 @@ export function CommunityPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Feed */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Create Post Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-[32px] p-8 shadow-xl"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white/30 bg-white/20">
+                  <img src={user?.avatar || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"} alt={user?.name || "You"} className="w-full h-full object-cover" />
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowPostModal(true)}
+                  className="flex-1 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 text-white placeholder-white/60 text-left hover:bg-white/30 transition-all"
+                >
+                  What's on your mind?
+                </motion.button>
+              </div>
+            </motion.div>
+
             {posts.map((post, index) => (
               <motion.div
                 key={index}
@@ -109,17 +151,18 @@ export function CommunityPage() {
                 {/* Post Header */}
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex items-center gap-4">
-                    <motion.div
+                    <motion.button
+                      onClick={() => handleProfileClick(post)}
                       whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="relative"
+                      className="relative cursor-pointer"
                     >
-                      <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-emerald-300">
+                      <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-emerald-300 hover:border-emerald-500 transition-colors">
                         <img src={post.avatar} alt={post.author} className="w-full h-full object-cover" />
                       </div>
                       <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-lime-400 rounded-full border-2 border-white flex items-center justify-center">
                         <Award className="w-3 h-3 text-white" />
                       </div>
-                    </motion.div>
+                    </motion.button>
 
                     <div>
                       <h4 className="text-teal-800">{post.author}</h4>
@@ -257,6 +300,148 @@ export function CommunityPage() {
             </motion.div>
           </div>
         </div>
+
+        {/* Create Post Modal */}
+        {showPostModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowPostModal(false)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-2xl w-full bg-white rounded-[32px] p-8 shadow-2xl"
+            >
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowPostModal(false)}
+                className="absolute top-6 right-6 w-10 h-10 rounded-full bg-emerald-50 hover:bg-emerald-100 flex items-center justify-center text-teal-600"
+              >
+                <X className="w-6 h-6" />
+              </motion.button>
+
+              <h3 className="text-2xl text-emerald-800 mb-6">Share Your Journey</h3>
+
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-emerald-300 flex-shrink-0">
+                  <img src={user?.avatar || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"} alt="You" className="w-full h-full object-cover" />
+                </div>
+                <div>
+                  <p className="text-teal-800 font-semibold">{user?.name || "You"}</p>
+                  <p className="text-sm text-teal-600">{user?.role || "Wellness Seeker"}</p>
+                </div>
+              </div>
+
+              <textarea
+                value={postContent}
+                onChange={(e) => setPostContent(e.target.value)}
+                placeholder="What's on your mind? Share your wellness journey, tips, or celebrations..."
+                className="w-full h-40 p-4 rounded-2xl border border-emerald-200/50 focus:border-emerald-500 focus:outline-none resize-none text-teal-800 placeholder-teal-400"
+              />
+
+              <div className="flex gap-4 mt-6">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowPostModal(false)}
+                  className="flex-1 px-6 py-3 rounded-full border border-emerald-300 text-teal-800 hover:bg-emerald-50 transition-colors"
+                >
+                  Cancel
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleCreatePost}
+                  disabled={!postContent.trim()}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  <Send className="w-4 h-4" />
+                  Post
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Profile View Modal */}
+        {showProfileModal && selectedProfile && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowProfileModal(false)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-md w-full bg-gradient-to-br from-white via-emerald-100 to-teal-200 rounded-[32px] p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+            >
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowProfileModal(false)}
+                className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/80 hover:bg-white flex items-center justify-center text-teal-600 z-10"
+              >
+                <X className="w-6 h-6" />
+              </motion.button>
+
+              {/* Profile Card */}
+              <div className="text-center">
+                <div className="w-24 h-24 rounded-3xl overflow-hidden border-4 border-emerald-400 mx-auto mb-6">
+                  <img src={selectedProfile.avatar} alt={selectedProfile.author} className="w-full h-full object-cover" />
+                </div>
+
+                <h3 className="text-2xl text-emerald-800 font-bold mb-2">{selectedProfile.author}</h3>
+                <p className="text-teal-700 font-semibold mb-4">{selectedProfile.role}</p>
+
+                {/* Followers/Following/Posts Stats */}
+                <div className="flex justify-around gap-4 mb-6 bg-white/70 backdrop-blur-sm rounded-2xl p-4">
+                  <div className="text-center">
+                    <p className="text-2xl text-emerald-600 font-bold">156</p>
+                    <p className="text-xs text-teal-600">Followers</p>
+                  </div>
+                  <div className="w-px bg-emerald-300/30" />
+                  <div className="text-center">
+                    <p className="text-2xl text-emerald-600 font-bold">84</p>
+                    <p className="text-xs text-teal-600">Following</p>
+                  </div>
+                  <div className="w-px bg-emerald-300/30" />
+                  <div className="text-center">
+                    <p className="text-2xl text-emerald-600 font-bold">23</p>
+                    <p className="text-xs text-teal-600">Posts</p>
+                  </div>
+                </div>
+
+                {/* Recent Post Preview */}
+                <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 mb-6 text-left">
+                  <p className="text-xs text-teal-600 font-semibold mb-2">Latest Post</p>
+                  <p className="text-teal-800 text-sm leading-relaxed mb-4">{selectedProfile.content}</p>
+                  <div className="flex gap-4 text-xs text-teal-600">
+                    <span>❤️ {selectedProfile.likes} Likes</span>
+                    <span>💬 {selectedProfile.comments} Comments</span>
+                  </div>
+                </div>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-semibold hover:shadow-lg transition-all"
+                >
+                  Follow
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </div>
   );

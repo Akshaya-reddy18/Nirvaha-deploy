@@ -23,9 +23,26 @@ import {
   MapPin,
   Edit2,
   Download,
+  Share2,
 } from "lucide-react";
+import { useState } from "react";
+import { ShareProfileCard } from "./ShareProfileCard";
+import { useAuth } from "../contexts/AuthContext";
 
 export function ProfilePage() {
+  const { user } = useAuth();
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [prefs, setPrefs] = useState({
+    theme: "system" as "light" | "dark" | "system",
+    language: "en" as "en" | "hi" | "te" | "kn",
+    emailNotifications: true,
+    pushNotifications: true,
+    profileVisibility: "friends" as "public" | "friends" | "private",
+    showOnlineStatus: true,
+    dataSharing: false,
+  });
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const weeklyData = [
     { day: "Mon", minutes: 45, mood: "calm", intensity: 60 },
     { day: "Tue", minutes: 60, mood: "energized", intensity: 80 },
@@ -79,12 +96,16 @@ export function ProfilePage() {
               <div className="relative">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="w-32 h-32 rounded-[32px] bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-2xl"
+                  className="w-32 h-32 rounded-[32px] bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-2xl overflow-hidden"
                   style={{
                     boxShadow: "0 20px 60px rgba(34, 197, 94, 0.4)",
                   }}
                 >
-                  <span className="text-5xl">🧘</span>
+                  {user?.avatar ? (
+                    <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-5xl">🧘</span>
+                  )}
                 </motion.div>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
@@ -99,14 +120,14 @@ export function ProfilePage() {
               <div className="flex-1">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h1 className="text-teal-800 mb-2">Arjun Mehta</h1>
+                    <h1 className="text-teal-800 mb-2">{user?.name || "Arjun Mehta"}</h1>
                     <p className="text-teal-700 mb-4">
                       Spiritual Seeker • Meditation Enthusiast
                     </p>
                     <div className="flex flex-wrap gap-3">
                       <div className="flex items-center gap-2 text-sm text-teal-600">
                         <Mail className="w-4 h-4" />
-                        arjun.mehta@example.com
+                        {user?.email || "arjun.mehta@example.com"}
                       </div>
                       <div className="flex items-center gap-2 text-sm text-teal-600">
                         <MapPin className="w-4 h-4" />
@@ -118,9 +139,18 @@ export function ProfilePage() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => setIsShareModalOpen(true)}
+                      className="px-6 py-3 bg-gradient-to-r from-lime-400 to-emerald-400 text-teal-900 rounded-2xl shadow-lg flex items-center gap-2"
+                    >
+                      <Share2 className="w-5 h-5" />
+                      Share Profile
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-2xl shadow-lg"
                     >
-                      Edit Profile
+                      {/* Account Settings */}
                     </motion.button>
                   </div>
                 </div>
@@ -138,6 +168,22 @@ export function ProfilePage() {
                   <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4">
                     <div className="text-2xl text-teal-800 mb-1">42hrs</div>
                     <div className="text-sm text-teal-600">Total Time</div>
+                  </div>
+                </div>
+
+                {/* Followers/Following/Posts Stats */}
+                <div className="grid grid-cols-3 gap-4 mt-4">
+                  <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 text-center hover:shadow-lg transition-all cursor-pointer">
+                    <div className="text-3xl text-blue-600 font-bold mb-1">{user?.followers ?? "1.2K"}</div>
+                    <div className="text-sm text-blue-700 font-semibold">Followers</div>
+                  </div>
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-4 text-center hover:shadow-lg transition-all cursor-pointer">
+                    <div className="text-3xl text-purple-600 font-bold mb-1">{user?.following ?? 456}</div>
+                    <div className="text-sm text-purple-700 font-semibold">Following</div>
+                  </div>
+                  <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-4 text-center hover:shadow-lg transition-all cursor-pointer">
+                    <div className="text-3xl text-orange-600 font-bold mb-1">{user?.posts ?? 87}</div>
+                    <div className="text-sm text-orange-700 font-semibold">Posts</div>
                   </div>
                 </div>
               </div>
@@ -573,12 +619,13 @@ export function ProfilePage() {
 
             <div className="space-y-4">
               <motion.button
+                onClick={() => setIsSettingsOpen(true)}
                 whileHover={{ x: 4 }}
                 className="w-full flex items-center justify-between p-4 bg-emerald-50 rounded-2xl hover:bg-emerald-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <User className="w-5 h-5 text-teal-600" />
-                  <span className="text-teal-800">Personal Information</span>
+                  <span className="text-teal-800">Preferences & Settings</span>
                 </div>
                 <svg
                   className="w-5 h-5 text-teal-600"
@@ -682,6 +729,178 @@ export function ProfilePage() {
           </motion.div>
         </div>
       </div>
+
+      {/* Preferences Modal */}
+      {isSettingsOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-white rounded-[32px] p-8 shadow-2xl border border-emerald-200/30 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsSettingsOpen(false)}
+              className="float-right text-teal-600 hover:text-teal-800 text-2xl font-bold leading-none"
+            >
+              ×
+            </button>
+
+            <h2 className="text-teal-800 mb-8">Preferences</h2>
+
+            <div className="space-y-8">
+              {/* Theme & Language */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Theme */}
+                <div>
+                  <label className="block">
+                    <p className="text-teal-800 font-semibold mb-2">Theme</p>
+                    <p className="text-teal-600 text-sm mb-3">Choose light, dark or system</p>
+                  </label>
+                  <select
+                    className="w-full px-4 py-3 rounded-xl border border-emerald-200/60 bg-white text-teal-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    value={prefs.theme}
+                    onChange={(e) => setPrefs({ ...prefs, theme: e.target.value as "light" | "dark" | "system" })}
+                  >
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="system">System</option>
+                  </select>
+                </div>
+
+                {/* Language */}
+                <div>
+                  <label className="block">
+                    <p className="text-teal-800 font-semibold mb-2">Language</p>
+                    <p className="text-teal-600 text-sm mb-3">App display language</p>
+                  </label>
+                  <select
+                    className="w-full px-4 py-3 rounded-xl border border-emerald-200/60 bg-white text-teal-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    value={prefs.language}
+                    onChange={(e) => setPrefs({ ...prefs, language: e.target.value as "en" | "hi" | "te" | "kn" })}
+                  >
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="te">Telugu</option>
+                    <option value="kn">Kannada</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Notifications */}
+              <div>
+                <h4 className="text-teal-800 font-semibold mb-4">Notifications</h4>
+                <div className="space-y-3">
+                  <label className="flex items-center justify-between p-4 bg-emerald-50 rounded-xl cursor-pointer hover:bg-emerald-100 transition-colors">
+                    <span className="text-teal-800">Email notifications</span>
+                    <input
+                      type="checkbox"
+                      checked={prefs.emailNotifications}
+                      onChange={(e) => setPrefs({ ...prefs, emailNotifications: e.target.checked })}
+                      className="w-5 h-5 cursor-pointer"
+                    />
+                  </label>
+                  <label className="flex items-center justify-between p-4 bg-emerald-50 rounded-xl cursor-pointer hover:bg-emerald-100 transition-colors">
+                    <span className="text-teal-800">Push notifications</span>
+                    <input
+                      type="checkbox"
+                      checked={prefs.pushNotifications}
+                      onChange={(e) => setPrefs({ ...prefs, pushNotifications: e.target.checked })}
+                      className="w-5 h-5 cursor-pointer"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {/* Privacy */}
+              <div>
+                <h4 className="text-teal-800 font-semibold mb-4">Privacy</h4>
+                <div className="space-y-3">
+                  {/* Profile Visibility */}
+                  <div className="p-4 bg-emerald-50 rounded-xl">
+                    <label className="block">
+                      <p className="text-teal-800 font-medium mb-2">Profile visibility</p>
+                    </label>
+                    <select
+                      className="w-full px-4 py-2 rounded-lg border border-emerald-200/60 bg-white text-teal-800"
+                      value={prefs.profileVisibility}
+                      onChange={(e) => setPrefs({ ...prefs, profileVisibility: e.target.value as "public" | "friends" | "private" })}
+                    >
+                      <option value="public">Public</option>
+                      <option value="friends">Friends</option>
+                      <option value="private">Private</option>
+                    </select>
+                  </div>
+                  <label className="flex items-center justify-between p-4 bg-emerald-50 rounded-xl cursor-pointer hover:bg-emerald-100 transition-colors">
+                    <span className="text-teal-800">Show online status</span>
+                    <input
+                      type="checkbox"
+                      checked={prefs.showOnlineStatus}
+                      onChange={(e) => setPrefs({ ...prefs, showOnlineStatus: e.target.checked })}
+                      className="w-5 h-5 cursor-pointer"
+                    />
+                  </label>
+                  <label className="flex items-center justify-between p-4 bg-emerald-50 rounded-xl cursor-pointer hover:bg-emerald-100 transition-colors">
+                    <span className="text-teal-800">Allow anonymous data sharing</span>
+                    <input
+                      type="checkbox"
+                      checked={prefs.dataSharing}
+                      onChange={(e) => setPrefs({ ...prefs, dataSharing: e.target.checked })}
+                      className="w-5 h-5 cursor-pointer"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-6 border-t border-emerald-200/30">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setSaveMessage("Preferences saved");
+                    setTimeout(() => setSaveMessage(null), 2000);
+                  }}
+                  className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                >
+                  Save Changes
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setIsSettingsOpen(false)}
+                  className="flex-1 py-3 bg-emerald-100 text-teal-800 rounded-xl hover:bg-emerald-200 transition-colors"
+                >
+                  Close
+                </motion.button>
+              </div>
+
+              {saveMessage && (
+                <div className="p-3 bg-emerald-100 border border-emerald-300 rounded-xl text-emerald-800 text-center">
+                  {saveMessage}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Share Profile Modal */}
+      <ShareProfileCard
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        userName="Arjun Mehta"
+        userTitle="Spiritual Seeker • Meditation Enthusiast"
+        userEmail="arjun.mehta@example.com"
+        userLocation="Mumbai, India"
+        stats={{
+          sessions: 127,
+          streak: 21,
+          totalTime: "42hrs",
+          wellnessScore: 92,
+        }}
+      />
     </div>
   );
 }

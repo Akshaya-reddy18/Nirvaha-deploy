@@ -226,3 +226,38 @@ html {
   transform: translateY(-8px);
   box-shadow: var(--shadow-divine);
 }
+
+/* Emerald Sanctuary theme utilities */
+.bg-sanctuary {
+  background: linear-gradient(135deg, #0f3d3e 0%, #051f20 100%);
+  min-height: 100vh;
+}
+
+.card-glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 30px rgba(0,210,160,0.1);
+  border-radius: 1rem;
+}
+
+.btn-luminous {
+  background: linear-gradient(90deg, #00d2a0 0%, #00b894 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0,210,160,0.12);
+}
+
+.image-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(15,61,62,1) 0%, rgba(15,61,62,0) 50%);
+  mix-blend-mode: multiply;
+}
+
+/* Helpful utility classes for devs to apply theme quickly */
+.shadow-mint-glow { box-shadow: 0 10px 30px rgba(0,210,160,0.1) !important; }
+.bg-sanctuary-soft { background: linear-gradient(180deg, rgba(15,61,62,0.6), rgba(5,31,32,0.9)); }
+

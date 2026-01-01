@@ -33,34 +33,22 @@ const Community = () => {
 
   return (
     <section id="community" className="community-section-bg min-h-[80vh] px-4 py-16 flex items-center relative overflow-hidden">
-      {/* Floating Spiritual Symbols Background Layer */}
-      <div className="about-us-symbols-layer">
-        <span className="floating-symbol floating-om-1">ॐ</span>
-        <span className="floating-symbol floating-om-2">ॐ</span>
-        <span className="floating-symbol floating-om-3">ॐ</span>
-        <span className="floating-symbol floating-swastik-1">卐</span>
-        <span className="floating-symbol floating-swastik-2">卐</span>
-        <span className="floating-symbol floating-swastik-3">卐</span>
-        <span className="floating-symbol floating-om-4">ॐ</span>
-        <span className="floating-symbol floating-swastik-4">卐</span>
-      </div>
-      
       <motion.div
         variants={fadeUp}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
-        className="max-w-6xl w-[85%] mx-auto bg-white rounded-[2.5rem] shadow-2xl p-10 md:p-16 lg:p-20 backdrop-blur-xl border border-emerald-100 fade-up relative z-10"
+        className="w-full px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-20 fade-up relative z-10"
       >
         {/* Header */}
         <motion.div variants={fadeUp}>
-          <h2 className="font-title text-3xl sm:text-4xl lg:text-5xl font-semibold text-center text-slate-900 mb-5">
+          <h2 className="heading-secondary text-center text-teal-800 mb-5">
             Join Our Healing{" "}
             <span className={`${themeGradient} bg-clip-text text-transparent`}>
               Community
             </span>
           </h2>
-          <p className="text-xl sm:text-2xl text-slate-600 text-center max-w-3xl mx-auto leading-relaxed">
+          <p className="subheading text-center text-teal-700 max-w-3xl mx-auto">
             Connect with like-minded individuals, participate in healing circles, and grow together.
           </p>
         </motion.div>
@@ -86,8 +74,8 @@ const Community = () => {
               <div className={`w-12 h-12 mx-auto mb-4 ${themeGradient} rounded-xl flex items-center justify-center`}>
                 <stat.icon className="text-white w-6 h-6" />
               </div>
-              <p className="text-2xl font-bold text-slate-900">{stat.number}</p>
-              <p className="text-slate-600">{stat.label}</p>
+              <p className="text-2xl font-bold text-teal-900">{stat.number}</p>
+              <p className="text-teal-700">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>

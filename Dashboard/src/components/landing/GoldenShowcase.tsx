@@ -25,13 +25,17 @@ const GoldenShowcase: React.FC = () => {
 
   return (
     <section className="goldenshowcase-bg relative w-full py-20 sm:py-28 lg:py-32">
-      {/* Floating spiritual symbols (scoped to this section only) */}
+      {/* Floating spiritual symbols (scoped to this section only) - 8 total */}
       <span className="golden-symbol golden-symbol-om-1">ॐ</span>
       <span className="golden-symbol golden-symbol-om-2">ॐ</span>
+      <span className="golden-symbol golden-symbol-om-3">ॐ</span>
+      <span className="golden-symbol golden-symbol-om-4">ॐ</span>
       <span className="golden-symbol golden-symbol-swastik-1">卐</span>
       <span className="golden-symbol golden-symbol-swastik-2">卐</span>
+      <span className="golden-symbol golden-symbol-swastik-3">卐</span>
+      <span className="golden-symbol golden-symbol-swastik-4">卐</span>
 
-      <div className="goldenshowcase-content max-w-6xl w-[80%] mx-auto px-4 sm:px-6 lg:px-8 fade-up">
+      <div className="goldenshowcase-content max-w-7xl w-[95%] mx-auto px-4 sm:px-6 lg:px-8 fade-up">
         {/* Soft white container for About / Inner Journey */}
         <div className="mx-auto w-full rounded-[2.5rem] bg-white/95 shadow-2xl border border-yellow-200/60 relative overflow-hidden">
           {/* Soft aura */}
@@ -40,13 +44,16 @@ const GoldenShowcase: React.FC = () => {
 
           <div className="relative z-[1] p-8 sm:p-10 lg:p-14">
             {/* Section heading for About / Inner Journey */}
-            <div className="mb-10 text-center">
-              <h2 className="font-title text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#0A0F0F]">
-                Rooted in Wisdom, Guided by Compassion
+            <div className="mb-6 text-center">
+              <h2 className="heading-secondary text-teal-800 text-center">
+                About Us
               </h2>
-              <p className="mt-3 text-[#4a4a4a] text-lg sm:text-xl max-w-3xl mx-auto">
-                A gentle space where ancient wisdom meets mindful technology.
-              </p>
+            </div>
+
+            <div className="mb-10">
+              <h3 className="heading-tertiary text-teal-800 text-center">
+                Guided healing for the mind, body, and soul.
+              </h3>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -58,10 +65,11 @@ const GoldenShowcase: React.FC = () => {
                     <video
                       className="w-full h-full object-cover"
                       src="/about_niv.mp4"
-                      controls
-                      playsInline
-                      preload="metadata"
+                      autoPlay
+                      loop
                       muted
+                      playsInline
+                      preload="auto"
                     />
                   </div>
                 </div>
@@ -69,11 +77,11 @@ const GoldenShowcase: React.FC = () => {
 
               {/* Right: Content related to the video */}
               <div className="w-full">
-                <h3 className="font-title text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#0A0F0F] mb-6">
-                  Guided Spiritual Healing Journey
-                </h3>
-                <p className="text-[#333] text-lg sm:text-xl leading-relaxed">
-                  Nirvaha is a holistic wellness platform designed to help people navigate emotions with clarity, calm, and purpose. Rooted in ancient wisdom and powered by modern AI, Nirvaha brings together meditation, sound healing, mindful conversations, creative expression, and community spaces into one seamless experience. From AI-guided emotional support and meditation practices to anonymous discussion rooms and wellness products, Nirvaha acts as a companion for everyday emotional balance—making inner well-being accessible, stigma-free, and deeply human.
+                <p className="text-teal-700 text-base sm:text-lg leading-relaxed mb-6">
+                  Nirvaha is a holistic wellness platform designed to help people navigate emotions with clarity, calm, and purpose. Powered by modern AI, Nirvaha brings together meditation, sound healing, mindful conversations, creative expression, and community spaces into one seamless experience. From AI-guided emotional support and meditation practices to anonymous discussion rooms and wellness products, Nirvaha acts as a companion for everyday emotional balance—making inner well-being accessible, stigma-free, and deeply human.
+                </p>
+                <p className="text-teal-600 text-base sm:text-lg leading-relaxed italic border-l-4 border-yellow-400 pl-4 py-2">
+                  "Rooted in wisdom, guided by compassion."
                 </p>
               </div>
             </div>

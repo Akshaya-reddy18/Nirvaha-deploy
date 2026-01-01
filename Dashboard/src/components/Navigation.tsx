@@ -1,11 +1,63 @@
 import { motion } from "motion/react";
 import { Home, Waves, Volume2, LayoutDashboard, Users, BookOpen, ShoppingBag, MessageCircle, Menu, X, ChevronDown, User, Settings, LogOut, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-export function Navigation({ currentPage, onNavigate }: { currentPage: string; onNavigate: (page: string) => void }) {
+export function Navigation({ currentPage, onNavigate }: { currentPage: string; onNavigate?: (page: string) => void }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [featuresMenuOpen, setFeaturesMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+
+  const handleNavigate = (page: string) => {
+    if (onNavigate) {
+      onNavigate(page);
+    } else {
+      // Use React Router navigation
+      switch(page) {
+        case 'home':
+          navigate('/dashboard/overview');
+          break;
+        case 'overview':
+          navigate('/dashboard/overview');
+          break;
+        case 'meditation':
+          navigate('/dashboard/meditation');
+          break;
+        case 'sound':
+          navigate('/dashboard/sound');
+          break;
+        case 'chatbot':
+          navigate('/dashboard/chatbot');
+          break;
+        case 'community':
+          navigate('/dashboard/community');
+          break;
+        case 'marketplace':
+          navigate('/dashboard/marketplace');
+          break;
+        case 'companion':
+          navigate('/dashboard/companion');
+          break;
+        case 'profile':
+          navigate('/dashboard/profile');
+          break;
+        default:
+          navigate(`/dashboard/${page}`);
+      }
+    }
+    setMobileMenuOpen(false);
+    setFeaturesMenuOpen(false);
+    setProfileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const featureItems = [
     { id: "meditation", label: "Meditation", icon: Waves },
@@ -29,23 +81,15 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
             <motion.div
               className="flex items-center gap-3 cursor-pointer"
               whileHover={{ scale: 1.05 }}
-              onClick={() => onNavigate("home")}
+              onClick={() => handleNavigate("home")}
             >
-              <motion.div
-                className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg"
-                animate={{
-                  boxShadow: [
-                    "0 0 20px rgba(34, 197, 94, 0.3)",
-                    "0 0 40px rgba(34, 197, 94, 0.5)",
-                    "0 0 20px rgba(34, 197, 94, 0.3)",
-                  ],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <span className="text-white text-xl">ॐ</span>
-              </motion.div>
+              <img
+                src="/logo.png"
+                alt="Nirvaha Logo"
+                className="w-12 h-12 rounded-lg object-contain drop-shadow-lg"
+              />
               <div>
-                <h3 className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                <h3 className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent font-semibold">
                   NIRVAHA
                 </h3>
                 <p className="text-xs text-teal-600">Harmony of Mind</p>
@@ -58,7 +102,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               <motion.button
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => onNavigate("home")}
+                onClick={() => handleNavigate("home")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all ${
                   currentPage === "home"
                     ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
@@ -103,7 +147,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
                         transition={{ delay: index * 0.05 }}
                         whileHover={{ x: 4, backgroundColor: "rgba(16, 185, 129, 0.1)" }}
                         onClick={() => {
-                          onNavigate(item.id);
+                          handleNavigate(item.id);
                           setFeaturesMenuOpen(false);
                         }}
                         className={`w-full flex items-center gap-3 px-6 py-3 transition-all ${
@@ -124,7 +168,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               <motion.button
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => onNavigate("marketplace")}
+                onClick={() => handleNavigate("marketplace")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all ${
                   currentPage === "marketplace"
                     ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
@@ -139,7 +183,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               <motion.button
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => onNavigate("companion")}
+                onClick={() => handleNavigate("companion")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all ${
                   currentPage === "companion"
                     ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
@@ -184,7 +228,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
                     <motion.button
                       whileHover={{ x: 4, backgroundColor: "rgba(16, 185, 129, 0.1)" }}
                       onClick={() => {
-                        onNavigate("profile");
+                        handleNavigate("profile");
                         setProfileMenuOpen(false);
                       }}
                       className={`w-full flex items-center gap-3 px-6 py-3 text-teal-700 transition-all ${
@@ -207,7 +251,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
                       <motion.button
                         whileHover={{ x: 4, backgroundColor: "rgba(239, 68, 68, 0.1)" }}
                         onClick={() => {
-                          onNavigate("login");
+                          handleLogout();
                           setProfileMenuOpen(false);
                         }}
                         className="w-full flex items-center gap-3 px-6 py-3 text-rose-600 transition-all"
@@ -256,7 +300,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
-                  onNavigate("profile");
+                  handleNavigate("profile");
                   setMobileMenuOpen(false);
                 }}
                 className="w-full py-2 bg-white rounded-xl text-teal-800 text-sm"
@@ -271,7 +315,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               animate={{ opacity: 1, x: 0 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                onNavigate("home");
+                handleNavigate("home");
                 setMobileMenuOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
@@ -295,7 +339,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
                   transition={{ delay: index * 0.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
-                    onNavigate(item.id);
+                    handleNavigate(item.id);
                     setMobileMenuOpen(false);
                   }}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
@@ -317,7 +361,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               transition={{ delay: 0.2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                onNavigate("marketplace");
+                handleNavigate("marketplace");
                 setMobileMenuOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
@@ -337,7 +381,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               transition={{ delay: 0.25 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                onNavigate("companion");
+                handleNavigate("companion");
                 setMobileMenuOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
@@ -357,7 +401,7 @@ export function Navigation({ currentPage, onNavigate }: { currentPage: string; o
               transition={{ delay: 0.3 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                onNavigate("login");
+                handleLogout();
                 setMobileMenuOpen(false);
               }}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-rose-600 hover:bg-rose-50 transition-all"

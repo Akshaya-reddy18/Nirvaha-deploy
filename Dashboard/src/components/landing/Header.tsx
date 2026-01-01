@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, createContext } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 // Context to provide the bounding rect of the header Nirvaha
 export const HeaderNirvahaRectContext = createContext<DOMRect | null>(null);
@@ -17,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ onNirvahaClick, logoSrc = '/logo.png', 
   const nirvahaRef = useRef<HTMLSpanElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,12 +85,21 @@ const Header: React.FC<HeaderProps> = ({ onNirvahaClick, logoSrc = '/logo.png', 
               </button>
             </div>
             <div className="flex items-center ml-auto">
-              <Link
-                to="/login"
-                className="px-5 py-2.5 rounded-full text-white font-medium bg-gradient-to-r from-[#00FFC6]/10 to-[#1ED5A6]/10 border border-[#00FFC6]/30 hover:from-[#00FFC6]/20 hover:to-[#1ED5A6]/20 hover:border-[#00FFC6]/50 hover:text-[#00FFC6] hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,198,0.25)] transition-all duration-300"
-              >
-                Login
-              </Link>
+              {user ? (
+                <Link
+                  to="/dashboard/overview"
+                  className="px-5 py-2.5 rounded-full text-white font-medium bg-gradient-to-r from-[#00FFC6]/10 to-[#1ED5A6]/10 border border-[#00FFC6]/30 hover:from-[#00FFC6]/20 hover:to-[#1ED5A6]/20 hover:border-[#00FFC6]/50 hover:text-[#00FFC6] hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,198,0.25)] transition-all duration-300"
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="px-5 py-2.5 rounded-full text-white font-medium bg-gradient-to-r from-[#00FFC6]/10 to-[#1ED5A6]/10 border border-[#00FFC6]/30 hover:from-[#00FFC6]/20 hover:to-[#1ED5A6]/20 hover:border-[#00FFC6]/50 hover:text-[#00FFC6] hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,198,0.25)] transition-all duration-300"
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         </div>

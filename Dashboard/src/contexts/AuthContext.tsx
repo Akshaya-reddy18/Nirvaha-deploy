@@ -15,6 +15,10 @@ interface User {
   email: string;
   name: string;
   role: string;
+  avatar?: string;
+  followers?: number;
+  following?: number;
+  posts?: number;
   profile?: UserProfile;
 }
 

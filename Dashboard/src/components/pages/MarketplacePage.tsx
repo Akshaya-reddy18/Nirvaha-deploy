@@ -170,7 +170,7 @@ export function MarketplacePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-emerald-50/20 to-teal-50/20 pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Page Header */}
         <motion.div
@@ -179,21 +179,10 @@ export function MarketplacePage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100/50 rounded-full border border-emerald-300/30 mb-6"
-          >
-            <ShoppingBag className="w-4 h-4 text-emerald-600" />
-            <span className="text-sm text-emerald-700">
-              Spiritual Marketplace
-            </span>
-          </motion.div>
-
-          <h1 className="text-emerald-800 mb-4">
+          <h1 className="text-white text-6xl md:text-7xl font-extrabold mb-6">
             Courses & Wellness Products
           </h1>
-          <p className="max-w-3xl mx-auto text-lg text-teal-700">
+          <p className="max-w-3xl mx-auto text-lg text-white">
             Enhance your spiritual journey with premium courses and curated
             wellness products
           </p>

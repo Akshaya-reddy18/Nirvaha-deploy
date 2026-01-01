@@ -1,7 +1,9 @@
 import { motion } from "motion/react";
 import { Bot, Sparkles, MessageCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function AIChatbotPreview() {
+  const navigate = useNavigate();
   return (
     <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-gradient-to-br from-teal-50 via-emerald-50 to-white">
       {/* Ambient Background */}
@@ -79,6 +81,7 @@ export function AIChatbotPreview() {
             </ul>
 
             <motion.button
+              onClick={() => navigate('/dashboard/chatbot')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               className="group px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center gap-2"

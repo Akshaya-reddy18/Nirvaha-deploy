@@ -1,7 +1,9 @@
 import { motion } from "motion/react";
 import { Volume2, Waves, Music, Radio } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function SoundHealingPreview() {
+  const navigate = useNavigate();
   const soundCategories = [
     {
       title: "Tibetan Bowls",
@@ -66,17 +68,7 @@ export function SoundHealingPreview() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-6"
-          >
-            <Volume2 className="w-4 h-4 text-lime-300" />
-            <span className="text-sm text-emerald-100">Vibrational Healing</span>
-          </motion.div>
-
-          <h2 className="text-white mb-4">Sound Healing Frequencies</h2>
+          <h2 className="text-white text-5xl md:text-6xl font-extrabold mb-6">Sound Healing Frequencies</h2>
           <p className="max-w-2xl mx-auto text-lg text-emerald-100">
             Immerse yourself in sacred frequencies that restore harmony to body, 
             mind, and spirit. Experience the transformative power of sound therapy.
@@ -249,6 +241,7 @@ export function SoundHealingPreview() {
           className="text-center mt-16"
         >
           <motion.button
+            onClick={() => navigate('/dashboard/sound')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             className="px-8 py-4 bg-gradient-to-r from-lime-400 to-emerald-400 text-teal-900 rounded-full shadow-2xl hover:shadow-emerald-400/50 transition-all"
