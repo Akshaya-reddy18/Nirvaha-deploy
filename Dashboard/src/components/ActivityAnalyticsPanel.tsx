@@ -216,9 +216,9 @@ export function ActivityAnalyticsPanel() {
           <div
             className="relative w-full max-w-lg mx-auto lg:ml-auto"
           >
-            <img 
-              src="/yoga-meditation.jpg" 
-              alt="Meditation Silhouettes" 
+            <img
+              src="/yoga-meditation.jpg"
+              alt="Meditation Silhouettes"
               className="w-full h-auto rounded-[32px] shadow-2xl"
             />
           </div>
