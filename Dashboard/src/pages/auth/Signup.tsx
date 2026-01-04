@@ -13,8 +13,36 @@ interface SignupData {
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
-  const heroImages = ["/foun/fo1.jpg", "/foun/fo2.jpg", "/foun/fo3.jpg"];
-  const [heroIndex, setHeroIndex] = useState(0);
+  
+  // Wellness-themed quotes with images
+  const wellnessQuotes = [
+    { 
+      text: "Wellness is not a destination, it is a way of life.", 
+      author: "Ancient Wisdom",
+      image: "/foun/fo1.jpg"
+    },
+    { 
+      text: "Your body is a temple, but only if you treat it as one.", 
+      author: "Astrid Alauda",
+      image: "/foun/fo2.jpg"
+    },
+    { 
+      text: "Take care of your body. It's the only place you have to live.", 
+      author: "Jim Rohn",
+      image: "/foun/fo3.jpg"
+    },
+    { 
+      text: "Peace comes from within. Do not seek it without.", 
+      author: "Buddha",
+      image: "/foun/fo4.jpeg"
+    },
+    { 
+      text: "The greatest wealth is health.", 
+      author: "Virgil",
+      image: "/foun/fo2.jpg"
+    },
+  ];
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [formData, setFormData] = useState<SignupData>({
     name: "",
     email: "",
@@ -28,10 +56,10 @@ const Signup: React.FC = () => {
 
   useEffect(() => {
     const id = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length);
-    }, 2000);
+      setCurrentQuoteIndex((prev) => (prev + 1) % wellnessQuotes.length);
+    }, 3000);
     return () => clearInterval(id);
-  }, []);
+  }, [wellnessQuotes.length]);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<SignupData> = {};
@@ -136,18 +164,87 @@ const Signup: React.FC = () => {
   return (
     <div className="min-h-screen relative flex overflow-x-hidden bg-gradient-to-br from-white via-emerald-100 to-teal-200">
       
-      {/* Left Section - Image Carousel (50% width on desktop, hidden on mobile/tablet) */}
-      <div className="hidden lg:flex lg:w-[50%] relative overflow-hidden h-screen bg-black">
-        <motion.img
-          key={heroImages[heroIndex]}
-          src={heroImages[heroIndex]}
-          alt="Signup showcase"
-          className="w-full h-full object-cover"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+      {/* Left Section - Wellness Quotes Carousel (50% width on desktop, hidden on mobile/tablet) */}
+      <div className="hidden lg:flex lg:w-[50%] relative overflow-hidden h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-white">
+        {/* Quote Container */}
+        <div className="relative z-10 flex flex-col items-center justify-center py-20 px-12 w-full">
+          {/* Rotating Quote with Message Border */}
+          <motion.div
+            key={currentQuoteIndex}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8 }}
+            className="relative max-w-lg w-full"
+          >
+            {/* Message Border Frame */}
+            <div className="relative bg-white rounded-3xl p-8 shadow-2xl border-4 border-emerald-300">
+              {/* Decorative Quote Icon */}
+              <svg className="w-12 h-12 text-emerald-200 mb-4 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+
+              {/* Quote Text */}
+              <p className="text-xl md:text-2xl font-semibold text-teal-800 mb-4 leading-relaxed text-center">
+                "{wellnessQuotes[currentQuoteIndex].text}"
+              </p>
+
+              {/* Author */}
+              <p className="text-base text-teal-600 italic text-center mb-6">
+                — {wellnessQuotes[currentQuoteIndex].author}
+              </p>
+
+              {/* Quote Image in Circular Frame */}
+              <motion.div
+                key={`image-${currentQuoteIndex}`}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex justify-center mb-6"
+              >
+                <div className="relative">
+                  {/* Glow Effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-emerald-300 rounded-full blur-xl"
+                    animate={{
+                      scale: [1, 1.15, 1],
+                      opacity: [0.3, 0.6, 0.3],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                  {/* Circular Image */}
+                  <img
+                    src={wellnessQuotes[currentQuoteIndex].image}
+                    alt={`${wellnessQuotes[currentQuoteIndex].author} quote`}
+                    className="relative w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-emerald-400"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Quote Indicators */}
+              <div className="flex justify-center gap-2">
+                {wellnessQuotes.map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className={`h-2 rounded-full transition-all ${
+                      i === currentQuoteIndex
+                        ? "bg-emerald-500 w-8"
+                        : "bg-emerald-200 w-2"
+                    }`}
+                    animate={{
+                      scale: i === currentQuoteIndex ? 1 : 0.8,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Right Section - Signup Form (65% width on desktop, 100% on mobile/tablet) */}
