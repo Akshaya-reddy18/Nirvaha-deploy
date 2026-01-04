@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Users, Calendar, MessageCircle, Globe, ArrowRight, Heart, BookOpen, Target } from 'lucide-react';
+import {
+  UsersRound,
+  MessageCircleHeart,
+  CalendarDays,
+  Globe2,
+  ArrowRight,
+  Heart,
+  BookOpen,
+  Target,
+} from 'lucide-react';
 
 // Animation Variants
 const fadeUp = {
@@ -61,18 +70,18 @@ const Community = () => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-12"
         >
           {[
-            { icon: Users, number: '1,000+', label: 'Active Members' },
-            { icon: MessageCircle, number: '50,000+', label: 'Support Messages' },
-            { icon: Calendar, number: '200+', label: 'Monthly Events' },
-            { icon: Globe, number: '2+', label: 'Countries' }
+            { icon: UsersRound, number: '1,000+', label: 'Souls Growing Together' },
+            { icon: MessageCircleHeart, number: '50,000+', label: 'Moments of Care Shared' },
+            { icon: CalendarDays, number: '200+', label: 'Guided Healing Sessions' },
+            { icon: Globe2, number: '2+', label: 'Across 2+ Countries Worldwide' }
           ].map((stat, idx) => (
             <motion.div
               key={idx}
               variants={fadeUp}
-              className="p-8 text-center bg-white rounded-3xl shadow hover:shadow-emerald-200 transition-transform hover:-translate-y-1 border border-emerald-100"
+              className="p-8 text-center bg-white rounded-3xl shadow hover:shadow-emerald-200 transition-transform hover:-translate-y-1.5 hover:shadow-lg border border-emerald-100"
             >
-              <div className={`w-12 h-12 mx-auto mb-4 ${themeGradient} rounded-xl flex items-center justify-center`}>
-                <stat.icon className="text-white w-6 h-6" />
+              <div className={`w-12 h-12 mx-auto mb-4 ${themeGradient} rounded-[14px] flex items-center justify-center shadow-sm ring-1 ring-white/20`}>
+                <stat.icon className="text-white w-6 h-6" strokeWidth={2.5} />
               </div>
               <p className="text-2xl font-bold text-teal-900">{stat.number}</p>
               <p className="text-teal-700">{stat.label}</p>
