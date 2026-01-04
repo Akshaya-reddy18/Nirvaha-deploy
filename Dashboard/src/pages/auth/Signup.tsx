@@ -19,27 +19,27 @@ const Signup: React.FC = () => {
     { 
       text: "Wellness is not a destination, it is a way of life.", 
       author: "Ancient Wisdom",
-      image: "/foun/fo1.webp"
+      image: "/foun/fo1.jpg"
     },
     { 
       text: "Your body is a temple, but only if you treat it as one.", 
       author: "Astrid Alauda",
-      image: "/foun/fo2.webp"
+      image: "/foun/fo2.jpg"
     },
     { 
       text: "Take care of your body. It's the only place you have to live.", 
       author: "Jim Rohn",
-      image: "/foun/fo3.webp"
+      image: "/foun/fo3.jpg"
     },
     { 
       text: "Peace comes from within. Do not seek it without.", 
       author: "Buddha",
-      image: "/foun/fo4.webp"
+      image: "/foun/fo4.jpg"
     },
     { 
       text: "The greatest wealth is health.", 
       author: "Virgil",
-      image: "/foun/fo2.webp"
+      image: "/foun/fo2.jpg"
     },
   ];
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
